@@ -1,0 +1,16 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorSecondary</item>
+        <item name="android:textColorPrimary">@color/colorTextPrimary</item>
+        <item name="android:colorBackground">@color/colorPrimaryLight</item>
+        <item name="android:textColorPrimaryInverse">@color/colorTextSecondary</item>
+        <item name="android:textColorSecondary">@color/colorTextSecondary</item>
+        <item name="android:textColorSecondaryInverse">@color/colorTextPrimary</item>
+        <item name="android:colorForeground">@color/colorSecondaryLight</item>
+    </style>
+</resources>
