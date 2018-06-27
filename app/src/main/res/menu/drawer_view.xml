@@ -19,7 +19,7 @@
             android:title="@string/search" />
         <item
             android:id="@+id/nav_random"
-            android:icon="@drawable/ic_launcher_foreground"
+            android:icon="@drawable/ic_random"
             android:title="@string/random" />
     </group>
 </menu>
