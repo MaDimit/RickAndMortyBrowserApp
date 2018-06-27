@@ -6,6 +6,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBar
 import android.view.MenuItem
 import com.example.maksimdimitrov.rickandmorty.R
+import com.example.maksimdimitrov.rickandmorty.controller.items.Map
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

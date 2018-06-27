@@ -1,16 +1,11 @@
-package com.example.maksimdimitrov.rickandmorty.controller
+package com.example.maksimdimitrov.rickandmorty.controller.items
 
 import android.content.Context
-import android.net.Uri
-import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import com.example.maksimdimitrov.rickandmorty.R
 
 abstract class ItemFragment : Fragment() {
+
     private var listener: OnItemInteractionListener? = null
     lateinit var rootView: View
 
