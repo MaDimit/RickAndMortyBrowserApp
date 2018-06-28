@@ -64,7 +64,7 @@ class Model {
                     , val origin: CharacterOrigin
                     , val location : CharacterLocation
                     , val image : String
-                    , val episode : List<String>
+                    , val episodes : List<String>
                     , val url : String) : Parcelable {
         constructor(parcel: Parcel) : this(
                 parcel.readInt(),
@@ -89,7 +89,7 @@ class Model {
             parcel.writeParcelable(origin, flags)
             parcel.writeParcelable(location, flags)
             parcel.writeString(image)
-            parcel.writeStringList(episode)
+            parcel.writeStringList(episodes)
             parcel.writeString(url)
         }
 

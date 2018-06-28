@@ -6,14 +6,27 @@ import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.example.maksimdimitrov.rickandmorty.R
+import com.example.maksimdimitrov.rickandmorty.controller.items.CharacterFragment
+import com.example.maksimdimitrov.rickandmorty.controller.items.ItemFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ItemFragment.OnItemInteractionListener {
+    override fun onItemRedirect(url: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private val fm = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setNavDrawer()
+
+        fm.beginTransaction().replace(R.id.fragment_container, CharacterFragment()).commit()
+    }
+
+    fun setNavDrawer() {
         nav_view.menu.getItem(0).isChecked = true
         nav_view.itemIconTintList = null
 
