@@ -52,7 +52,7 @@
             android:textSize="44sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/translucent_rectangle"
-            app:layout_constraintStart_toStartOf="@+id/character_image"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/translucent_rectangle"
             tools:text="Pickle Rick" />
     </android.support.constraint.ConstraintLayout>
