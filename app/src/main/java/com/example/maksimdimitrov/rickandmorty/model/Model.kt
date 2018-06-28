@@ -77,7 +77,8 @@ class Model {
                 parcel.readParcelable(CharacterLocation::class.java.classLoader),
                 parcel.readString(),
                 parcel.createStringArrayList(),
-                parcel.readString())
+                parcel.readString()) {
+        }
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
             parcel.writeInt(id)
@@ -107,6 +108,7 @@ class Model {
             }
         }
     }
+
 
     class Location(val id: Int
                    , val name: String
@@ -184,4 +186,12 @@ class Model {
             }
         }
     }
+
+    class PageInfo(val count : Int, val pages : Int, val next : String, val prev : String)
+
+    class CharacterPage(val info : PageInfo, val characters: List<Character>)
+
+    class LocationPage(val info: PageInfo, val locations : List<Location>)
+
+    class EpisodePage(val info : PageInfo, val episodes: List<Episode>)
 }

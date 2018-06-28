@@ -34,26 +34,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/translucent_rectangle"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:background="@color/translucent_grey"
         app:layout_constraintBottom_toBottomOf="@+id/character_image"
         app:layout_constraintEnd_toEndOf="@+id/character_image"
-        app:layout_constraintStart_toStartOf="@+id/character_image" />
+        app:layout_constraintStart_toStartOf="@+id/character_image">
 
-    <TextView
-        android:id="@+id/character_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorSecondary"
-        android:textSize="44sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/translucent_rectangle"
-        app:layout_constraintStart_toStartOf="@+id/character_image"
-        app:layout_constraintTop_toTopOf="@+id/translucent_rectangle"
-        tools:text="Pickle Rick" />
+        <TextView
+            android:id="@+id/character_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:textColor="@color/colorSecondary"
+            android:textSize="44sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/translucent_rectangle"
+            app:layout_constraintStart_toStartOf="@+id/character_image"
+            app:layout_constraintTop_toTopOf="@+id/translucent_rectangle"
+            tools:text="Pickle Rick" />
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/container_status"
@@ -82,13 +84,15 @@
 
         <TextView
             android:id="@+id/status"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:textAlignment="viewEnd"
             android:textColor="@color/colorSecondary"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_status"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Alive" />
     </android.support.constraint.ConstraintLayout>
@@ -119,13 +123,15 @@
 
         <TextView
             android:id="@+id/species"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:textAlignment="viewEnd"
             android:textColor="@color/colorSecondary"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_species"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="unknown" />
     </android.support.constraint.ConstraintLayout>
@@ -156,13 +162,15 @@
 
         <TextView
             android:id="@+id/type"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:textAlignment="viewEnd"
             android:textColor="@color/colorSecondary"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_type"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Pickle" />
     </android.support.constraint.ConstraintLayout>
@@ -193,13 +201,15 @@
 
         <TextView
             android:id="@+id/gender"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:textAlignment="viewEnd"
             android:textColor="@color/colorSecondary"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_gender"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Male" />
     </android.support.constraint.ConstraintLayout>
@@ -230,13 +240,15 @@
 
         <TextView
             android:id="@+id/origin"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:textAlignment="viewEnd"
             android:textColor="@color/colorSecondary"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_origin"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Earth (C-137)" />
     </android.support.constraint.ConstraintLayout>
@@ -268,16 +280,19 @@
 
         <TextView
             android:id="@+id/location"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:textAlignment="viewEnd"
             android:textColor="@color/colorSecondary"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_location"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             tools:text="Earth (Replacement Dimension)" />
+
     </android.support.constraint.ConstraintLayout>
 
     <android.support.v7.widget.RecyclerView
