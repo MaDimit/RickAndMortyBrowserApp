@@ -1,6 +1,7 @@
 package com.example.maksimdimitrov.rickandmorty.model
 
 import android.os.AsyncTask
+import android.util.Log
 import com.example.maksimdimitrov.rickandmorty.controller.items.Character
 import org.json.JSONArray
 import org.json.JSONException
@@ -9,6 +10,8 @@ import java.net.MalformedURLException
 import java.net.URL
 
 object BaseDataSource : DataSource {
+
+    private val TAG = "BASE_DATA_SOURCE"
 
     private val BASE_URL = "https://rickandmortyapi.com/api/"
     private val LOCATION_URL = "https://rickandmortyapi.com/api/location/"
@@ -22,7 +25,7 @@ object BaseDataSource : DataSource {
     private val COUNT = "count"
     private val PAGES = "pages"
     private val NEXT = "next"
-    private val PREV = " prev"
+    private val PREV = "prev"
 
     private val chDataSource = CharacterDataSource
 
@@ -31,7 +34,7 @@ object BaseDataSource : DataSource {
     }
 
     override fun getCharacters(pageUrl: String, pageNumber: Int): Model.CharacterPage? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return chDataSource.getCharacters(pageUrl, pageNumber)
     }
 
     override fun findCharacters(name: String, status: String, species: String, type: String, gender: String): Model.CharacterPage? {
@@ -66,6 +69,7 @@ object BaseDataSource : DataSource {
         if (!url.contains(BASE_URL)) {
             throw MalformedURLException()
         }
+        Log.d(TAG, "getJSONString fired. url: $url")
         return URL(url)
                 .openConnection()
                 .getInputStream()
@@ -95,7 +99,7 @@ object BaseDataSource : DataSource {
         if(jsonArr == null) {
             return result
         }
-        for(i in 0..jsonArr.length()){
+        for(i in 0 until jsonArr.length()){
             result.add(jsonArr.getJSONObject(i))
         }
         return result

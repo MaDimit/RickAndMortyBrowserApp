@@ -4,6 +4,12 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class Model {
+    interface Item
+    interface Page{
+        val info : PageInfo
+        val items : List<Item>
+    }
+
     class CharacterOrigin(val name : String, val url : String) : Parcelable {
         constructor(parcel: Parcel) : this(
                 parcel.readString(),
@@ -65,7 +71,7 @@ class Model {
                     , val location : CharacterLocation
                     , val image : String
                     , val episodes : List<String>
-                    , val url : String) : Parcelable {
+                    , val url : String) : Parcelable, Item {
         constructor(parcel: Parcel) : this(
                 parcel.readInt(),
                 parcel.readString(),
@@ -77,8 +83,7 @@ class Model {
                 parcel.readParcelable(CharacterLocation::class.java.classLoader),
                 parcel.readString(),
                 parcel.createStringArrayList(),
-                parcel.readString()) {
-        }
+                parcel.readString())
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
             parcel.writeInt(id)
@@ -114,7 +119,7 @@ class Model {
                    , val name: String
                    , val type: String, val dimension : String
                    , val residents : List<String>
-                   , val url : String ) : Parcelable {
+                   , val url : String ) : Parcelable, Item {
         constructor(parcel: Parcel) : this(
                 parcel.readInt(),
                 parcel.readString(),
@@ -153,7 +158,7 @@ class Model {
                   , val airDate: String
                   , val episode : String
                   , val characters: List<String>
-                  , val url: String) : Parcelable {
+                  , val url: String) : Parcelable, Item {
         constructor(parcel: Parcel) : this(
                 parcel.readInt(),
                 parcel.readString(),
@@ -189,9 +194,9 @@ class Model {
 
     class PageInfo(val count : Int, val pages : Int, val next : String, val prev : String)
 
-    class CharacterPage(val info : PageInfo, val characters: List<Character>)
+    class CharacterPage(override val info: PageInfo, override val items: List<Character>) : Page
 
-    class LocationPage(val info: PageInfo, val locations : List<Location>)
+    class LocationPage(override val info: PageInfo, override val items: List<Location>) : Page
 
-    class EpisodePage(val info : PageInfo, val episodes: List<Episode>)
+    class EpisodePage(override val info: PageInfo, override val items: List<Episode>) : Page
 }

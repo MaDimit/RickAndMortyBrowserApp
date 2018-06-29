@@ -10,6 +10,8 @@ import org.json.JSONException
 import org.json.JSONObject
 
 object CharacterDataSource {
+    private val TAG = "CHARACTER_DATA_SOURCE"
+
     private val CHARACTER_URL = "https://rickandmortyapi.com/api/character/"
 
     private val ID = "id"
@@ -35,6 +37,7 @@ object CharacterDataSource {
     }
 
     fun getCharacters(pageUrl: String, pageNumber: Int): Model.CharacterPage? {
+        Log.d(TAG, "getCharacters fired. pageUrl: $pageUrl, pageNumber: $pageNumber")
         val requestURL = if (pageUrl.isNotEmpty()) pageUrl else if (pageNumber != -1) "$CHARACTER_URL?page$pageNumber" else CHARACTER_URL
         val json = BaseDataSource.getJSONString(requestURL)
         return createCharactersPage(json)

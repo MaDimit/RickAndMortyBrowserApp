@@ -3,25 +3,36 @@ package com.example.maksimdimitrov.rickandmorty.controller
 import android.annotation.SuppressLint
 import android.os.AsyncTask
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.example.maksimdimitrov.rickandmorty.R
-import com.example.maksimdimitrov.rickandmorty.controller.items.Character
-import com.example.maksimdimitrov.rickandmorty.controller.items.CharacterFragment
-import com.example.maksimdimitrov.rickandmorty.controller.items.ItemFragment
+import com.example.maksimdimitrov.rickandmorty.controller.items.*
 import com.example.maksimdimitrov.rickandmorty.model.BaseDataSource
+import com.example.maksimdimitrov.rickandmorty.model.Model
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.onComplete
+import org.jetbrains.anko.uiThread
 import java.util.*
 
-class MainActivity : AppCompatActivity(), ItemFragment.OnItemInteractionListener {
+class MainActivity : AppCompatActivity(), ItemFragment.OnItemInteractionListener, ListFragment.ItemClickListener {
+
     override fun onItemRedirect(url: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun onListItemClick(item: Model.Item) {
+        when(item) {
+            is Character -> replaceFragment(CharacterFragment.newInstance(item), true)
+            is Location -> replaceFragment(LocationFragment.newInstance(item), true)
+            is Episode -> replaceFragment(EpisodeFragment.newInstance(item), true)
+        }
+    }
+
     private val fm = supportFragmentManager
-    private val dataSource = BaseDataSource
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,26 +40,9 @@ class MainActivity : AppCompatActivity(), ItemFragment.OnItemInteractionListener
 
         setNavDrawer()
 
-        fragment_container.setOnClickListener {
-            executeAsync(Random().nextInt(493))
-        }
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    private fun executeAsync(id : Int) {
-        object : AsyncTask<Int, Unit, Character?>() {
-            override fun doInBackground(vararg ids: Int?): Character? {
-                return dataSource.getCharacter(id = ids[0]!!)
-            }
-
-            override fun onPostExecute(character: Character?) {
-                if (character != null) {
-                    fm.beginTransaction().replace(R.id.fragment_container, CharacterFragment.newInstance(character)).commit()
-                }
-
-
-            }
-        }.execute(id)
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ListFragment.newInstance(ListFragment.Type.CHARACTER))
+                .commit()
     }
 
     fun setNavDrawer() {
@@ -76,7 +70,9 @@ class MainActivity : AppCompatActivity(), ItemFragment.OnItemInteractionListener
                 R.id.nav_locations -> supportActionBar?.title = "Locations"
                 R.id.nav_episodes -> supportActionBar?.title = "Episodes"
                 R.id.nav_search -> supportActionBar?.title = "Search"
-                R.id.nav_random -> {supportActionBar?.title = "Random Character"}
+                R.id.nav_random -> {
+                    supportActionBar?.title = "Random Character"
+                }
             }
             true
         }
@@ -90,5 +86,14 @@ class MainActivity : AppCompatActivity(), ItemFragment.OnItemInteractionListener
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun replaceFragment(fragment: Fragment, addToBackstack: Boolean = false) {
+        val tx = fm.beginTransaction()
+        tx.replace(R.id.fragment_container, fragment)
+        if(addToBackstack){
+            tx.addToBackStack(null)
+        }
+        tx.commit()
     }
 }
