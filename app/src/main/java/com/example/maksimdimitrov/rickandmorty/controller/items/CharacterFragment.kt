@@ -10,9 +10,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.maksimdimitrov.rickandmorty.R
+import com.example.maksimdimitrov.rickandmorty.adapters.CharacterEpisodesAdapter
+import com.example.maksimdimitrov.rickandmorty.controller.ListFragment
+import com.example.maksimdimitrov.rickandmorty.model.BaseDataSource
 import com.example.maksimdimitrov.rickandmorty.model.Model
-import kotlinx.android.synthetic.main.fragment_character.*
 import kotlinx.android.synthetic.main.fragment_character.view.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.onComplete
 
 
 typealias Character  = Model.Character
@@ -54,6 +58,7 @@ open class CharacterFragment : ItemFragment() {
                         .load(image)
                         .into(it.character_image)
                 initRecyclerView()
+                initOnClickListeners()
             }
         }
     }
@@ -61,6 +66,45 @@ open class CharacterFragment : ItemFragment() {
     private fun initRecyclerView() {
         val rv = rootView.episodes_rv
         rv.layoutManager = LinearLayoutManager(context)
+        rootView.character_progressBar.visibility = View.VISIBLE
+        doAsync {
+            val episodes = character.episodes
+                    .map { BaseDataSource.getEpisode(it) }
+                    .requireNoNulls()
+                    .toList()
+            onComplete {
+                rootView.character_progressBar.visibility = View.GONE
+                rv.adapter = CharacterEpisodesAdapter(episodes)
+            }
+        }
+    }
+
+    private fun initOnClickListeners(){
+        rootView.container_origin.setOnClickListener {
+            if(context is ListFragment.ItemClickListener){
+                doAsync {
+                    val origin = BaseDataSource.getLocation(character.origin.url)
+                    onComplete {
+                        origin?.let {
+                            (context as ListFragment.ItemClickListener).onListItemClick(it)
+                        }
+                    }
+                }
+            }
+        }
+        rootView.container_location.setOnClickListener {
+            if(context is ListFragment.ItemClickListener){
+                doAsync {
+                    val location = BaseDataSource.getLocation(character.location.url)
+                    onComplete {
+                        location?.let {
+                            (context as ListFragment.ItemClickListener).onListItemClick(it)
+                        }
+                    }
+                }
+            }
+        }
+
 
     }
 

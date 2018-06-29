@@ -14,7 +14,6 @@ object BaseDataSource : DataSource {
     private val TAG = "BASE_DATA_SOURCE"
 
     private val BASE_URL = "https://rickandmortyapi.com/api/"
-    private val EPISODE_URL = "https://rickandmortyapi.com/api/episode/"
 
     //Page constants
     val INFO = "info"
@@ -28,6 +27,7 @@ object BaseDataSource : DataSource {
 
     private val chDataSource = CharacterDataSource
     private val locDataSource = LocationDataSource
+    private val episodeDataSource = EpisodeDataSource
 
     override fun getCharacter(url: String, id: Int): Model.Character? {
         return chDataSource.getCharacter(url, id)
@@ -54,11 +54,11 @@ object BaseDataSource : DataSource {
     }
 
     override fun getEpisode(url: String, id: Int): Model.Episode? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return episodeDataSource.getEpisode(url, id)
     }
 
     override fun getEpisodes(pageUrl: String, pageNumber: Int): Model.EpisodePage? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return episodeDataSource.getEpisodes(pageUrl, pageNumber)
     }
 
     override fun findEpisodes(name: String, episode: String): Model.EpisodePage? {
