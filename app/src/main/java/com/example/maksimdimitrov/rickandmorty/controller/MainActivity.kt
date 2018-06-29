@@ -17,6 +17,11 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.onComplete
 import org.jetbrains.anko.uiThread
 import java.util.*
+import android.R.attr.tag
+import android.R.transition
+import android.os.Build
+
+
 
 class MainActivity : AppCompatActivity(), ItemFragment.OnItemInteractionListener, ListFragment.ItemClickListener {
 
@@ -90,6 +95,7 @@ class MainActivity : AppCompatActivity(), ItemFragment.OnItemInteractionListener
 
     private fun replaceFragment(fragment: Fragment, addToBackstack: Boolean = false) {
         val tx = fm.beginTransaction()
+        tx.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit)
         tx.replace(R.id.fragment_container, fragment)
         if(addToBackstack){
             tx.addToBackStack(null)
