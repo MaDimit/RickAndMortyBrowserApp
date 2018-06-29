@@ -11,6 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.maksimdimitrov.rickandmorty.R
 import com.example.maksimdimitrov.rickandmorty.adapters.CharacterAdapter
+import com.example.maksimdimitrov.rickandmorty.adapters.EpisodeAdapter
+import com.example.maksimdimitrov.rickandmorty.adapters.LocationAdapter
+import com.example.maksimdimitrov.rickandmorty.controller.items.Episode
+import com.example.maksimdimitrov.rickandmorty.controller.items.EpisodeFragment
 import com.example.maksimdimitrov.rickandmorty.model.BaseDataSource
 import com.example.maksimdimitrov.rickandmorty.model.Model
 import kotlinx.android.synthetic.main.fragment_list.view.*
@@ -119,7 +123,7 @@ class ListFragment : Fragment() {
                                 page?.let {
                                     recyclerView.adapter?.notifyDataSetChanged()
                                     info = it.info
-                                    (dataSet as ArrayList).addAll(it.items)
+                                    (dataSet as ArrayList<Model.Item>).addAll(it.items)
                                     if (info.next.isNotEmpty()) {
                                         loading = true
                                     }
@@ -136,8 +140,8 @@ class ListFragment : Fragment() {
     private fun getAdapter(): RecyclerView.Adapter<*> {
         return when (type) {
             Type.CHARACTER -> CharacterAdapter(dataSet as List<Model.Character>)
-            Type.LOCATION -> TODO("set location adapter")
-            Type.EPISODE -> TODO("set episode adapter")
+            Type.LOCATION -> LocationAdapter(dataSet as List<Model.Location>)
+            Type.EPISODE -> EpisodeAdapter(dataSet as List<Model.Episode>)
         }
     }
 

@@ -2,6 +2,7 @@ package com.example.maksimdimitrov.rickandmorty.controller.items
 
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_character.view.*
 
 typealias Character  = Model.Character
 
-class CharacterFragment : ItemFragment() {
+open class CharacterFragment : ItemFragment() {
 
     private val TAG = LocationFragment::class.qualifiedName
     lateinit var character: Character
@@ -34,11 +35,11 @@ class CharacterFragment : ItemFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_character, container, false)
-        setView()
+        initView()
         return rootView
     }
 
-    private fun setView() {
+    private fun initView() {
         //setting all fields
         rootView.let {
             it.character_name.text = character.name
@@ -49,12 +50,18 @@ class CharacterFragment : ItemFragment() {
                 gender.goneIfEmpty(it.container_gender, it.gender)
                 origin.name.goneIfEmpty(it.container_origin, it.origin)
                 location.name.goneIfEmpty(it.container_location, it.location)
-
                 Glide.with(this@CharacterFragment)
                         .load(image)
                         .into(it.character_image)
+                initRecyclerView()
             }
         }
+    }
+
+    private fun initRecyclerView() {
+        val rv = rootView.episodes_rv
+        rv.layoutManager = LinearLayoutManager(context)
+
     }
 
     private fun String.goneIfEmpty(container: ViewGroup, text: TextView) {

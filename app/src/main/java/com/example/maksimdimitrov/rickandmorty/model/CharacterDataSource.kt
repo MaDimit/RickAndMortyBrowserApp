@@ -2,7 +2,6 @@ package com.example.maksimdimitrov.rickandmorty.model
 
 import android.util.Log
 import com.example.maksimdimitrov.rickandmorty.controller.items.Character
-import com.example.maksimdimitrov.rickandmorty.controller.items.Location
 import com.example.maksimdimitrov.rickandmorty.model.BaseDataSource.INFO
 import com.example.maksimdimitrov.rickandmorty.model.BaseDataSource.RESULTS
 import org.json.JSONArray

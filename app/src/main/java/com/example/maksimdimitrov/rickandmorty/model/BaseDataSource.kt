@@ -14,7 +14,6 @@ object BaseDataSource : DataSource {
     private val TAG = "BASE_DATA_SOURCE"
 
     private val BASE_URL = "https://rickandmortyapi.com/api/"
-    private val LOCATION_URL = "https://rickandmortyapi.com/api/location/"
     private val EPISODE_URL = "https://rickandmortyapi.com/api/episode/"
 
     //Page constants
@@ -28,6 +27,7 @@ object BaseDataSource : DataSource {
     private val PREV = "prev"
 
     private val chDataSource = CharacterDataSource
+    private val locDataSource = LocationDataSource
 
     override fun getCharacter(url: String, id: Int): Model.Character? {
         return chDataSource.getCharacter(url, id)
@@ -42,11 +42,11 @@ object BaseDataSource : DataSource {
     }
 
     override fun getLocation(url: String, id: Int): Model.Location? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return locDataSource.getLocation(url, id)
     }
 
     override fun getLocations(pageUrl: String, pageNumber: Int): Model.LocationPage? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return locDataSource.getLocations(pageUrl, pageNumber)
     }
 
     override fun findLocations(name: String, type: String, dimension: String): Model.LocationPage? {
@@ -80,26 +80,27 @@ object BaseDataSource : DataSource {
     }
 
     fun createPageInfo(jsonObject: JSONObject?): Model.PageInfo? {
-        if(jsonObject == null) {
+        if (jsonObject == null) {
             return null
         }
-        return try{val count = jsonObject.getInt(COUNT)
-        val pages = jsonObject.getInt(PAGES)
-        val next = jsonObject.getString(NEXT)
-        val prev = jsonObject.getString(PREV)
+        return try {
+            val count = jsonObject.getInt(COUNT)
+            val pages = jsonObject.getInt(PAGES)
+            val next = jsonObject.getString(NEXT)
+            val prev = jsonObject.getString(PREV)
             Model.PageInfo(count, pages, next, prev)
-        }catch (e : JSONException) {
+        } catch (e: JSONException) {
             e.printStackTrace()
             null
         }
     }
 
-    fun createPageResult(jsonArr: JSONArray?) : List<JSONObject> {
+    fun createPageResult(jsonArr: JSONArray?): List<JSONObject> {
         val result = ArrayList<JSONObject>()
-        if(jsonArr == null) {
+        if (jsonArr == null) {
             return result
         }
-        for(i in 0 until jsonArr.length()){
+        for (i in 0 until jsonArr.length()) {
             result.add(jsonArr.getJSONObject(i))
         }
         return result

@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity(), ItemFragment.OnItemInteractionListener
     }
 
     private val fm = supportFragmentManager
+    private val dataSource = BaseDataSource
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +46,7 @@ class MainActivity : AppCompatActivity(), ItemFragment.OnItemInteractionListener
 
         setNavDrawer()
 
-        supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ListFragment.newInstance(ListFragment.Type.CHARACTER))
-                .commit()
+        replaceFragment(ListFragment.newInstance(ListFragment.Type.CHARACTER))
     }
 
     fun setNavDrawer() {
@@ -68,17 +67,33 @@ class MainActivity : AppCompatActivity(), ItemFragment.OnItemInteractionListener
             // close drawer when item is tapped
             drawer_layout.closeDrawers()
 
-            // Add code here to update the UI based on the item selected
-            // For example, swap UI fragments here
             when (menuItem.itemId) {
-                R.id.nav_characters -> supportActionBar?.title = "Characters"
-                R.id.nav_locations -> supportActionBar?.title = "Locations"
-                R.id.nav_episodes -> supportActionBar?.title = "Episodes"
+                R.id.nav_characters -> {
+                    supportActionBar?.title = "Characters"
+                    replaceFragment(ListFragment.newInstance(ListFragment.Type.CHARACTER))
+                }
+                R.id.nav_locations -> {
+                    supportActionBar?.title = "Locations"
+                    replaceFragment(ListFragment.newInstance(ListFragment.Type.LOCATION))
+                }
+                R.id.nav_episodes -> {
+                    supportActionBar?.title = "Episodes"
+                    replaceFragment(ListFragment.newInstance(ListFragment.Type.EPISODE))
+                }
                 R.id.nav_search -> supportActionBar?.title = "Search"
                 R.id.nav_random -> {
                     supportActionBar?.title = "Random Character"
+                    doAsync {
+                        val character = dataSource.getCharacter(id = Random().nextInt(493) + 1)
+                        onComplete {
+                            character?.let {
+                                replaceFragment(CharacterFragment.newInstance(character))
+                            }
+                        }
+                    }
                 }
             }
+
             true
         }
     }
